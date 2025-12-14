@@ -160,7 +160,7 @@ public class SportradarClient {
     public Map<String, Object> getBasketballLiveEvents() {
         log.debug("Fetching basketball live events");
         return basketballClient.get()
-                .uri("/sport_events/live/summaries.json?api_key={key}", apiKey)
+                .uri("/schedules/live/summaries.json?api_key={key}", apiKey)
                 .retrieve()
                 .bodyToMono(Map.class)
                 .block();
