@@ -133,6 +133,72 @@ public class SportradarClient {
                 .block();
     }
 
+    @CircuitBreaker(name = "sportradar", fallbackMethod = "fallbackMap")
+    @Retry(name = "sportradar")
+    public Map<String, Object> getSoccerLiveEvents() {
+        log.debug("Fetching soccer live events");
+        return soccerClient.get()
+                .uri("/schedules/live/summaries.json?api_key={key}", apiKey)
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+    }
+
+    @CircuitBreaker(name = "sportradar", fallbackMethod = "fallbackMap")
+    @Retry(name = "sportradar")
+    public Map<String, Object> getSoccerScheduledEvents() {
+        log.debug("Fetching soccer scheduled events");
+        return soccerClient.get()
+                .uri("/schedules/2024-12-14/summaries.json?api_key={key}", apiKey)
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+    }
+
+    @CircuitBreaker(name = "sportradar", fallbackMethod = "fallbackMap")
+    @Retry(name = "sportradar")
+    public Map<String, Object> getBasketballLiveEvents() {
+        log.debug("Fetching basketball live events");
+        return basketballClient.get()
+                .uri("/schedules/live/summaries.json?api_key={key}", apiKey)
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+    }
+
+    @CircuitBreaker(name = "sportradar", fallbackMethod = "fallbackMap")
+    @Retry(name = "sportradar")
+    public Map<String, Object> getBasketballScheduledEvents() {
+        log.debug("Fetching basketball scheduled events");
+        return basketballClient.get()
+                .uri("/schedules/2024-12-14/summaries.json?api_key={key}", apiKey)
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+    }
+
+    @CircuitBreaker(name = "sportradar", fallbackMethod = "fallbackMap")
+    @Retry(name = "sportradar")
+    public Map<String, Object> getTennisLiveEvents() {
+        log.debug("Fetching tennis live events");
+        return tennisClient.get()
+                .uri("/schedules/live/summaries.json?api_key={key}", apiKey)
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+    }
+
+    @CircuitBreaker(name = "sportradar", fallbackMethod = "fallbackMap")
+    @Retry(name = "sportradar")
+    public Map<String, Object> getTennisScheduledEvents() {
+        log.debug("Fetching tennis scheduled events");
+        return tennisClient.get()
+                .uri("/schedules/2024-12-14/summaries.json?api_key={key}", apiKey)
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+    }
+
     @SuppressWarnings("unused")
     private Map<String, Object> fallbackMap(String id, Throwable t) {
         log.warn("Fallback triggered for id: {}, error: {}", id, t.getMessage());

@@ -4,6 +4,7 @@ import com.sportslive.adapter.SportAdapter;
 import com.sportslive.adapter.SportAdapter.StatisticsFilter;
 import com.sportslive.domain.model.*;
 import com.sportslive.exception.UnsupportedSportException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class EventService {
 
     private final Map<String, SportAdapter> adapters;
 
-    public EventService(Map<String, SportAdapter> adapters) {
+    public EventService(@Qualifier("sportAdapters") Map<String, SportAdapter> adapters) {
         this.adapters = adapters;
     }
 
@@ -36,6 +37,16 @@ public class EventService {
     @Cacheable(value = "statistics", key = "#sport + '-' + #eventId + '-' + #filter.period() + '-' + #filter.includeAdvanced()")
     public Statistics getStatistics(String sport, String eventId, StatisticsFilter filter) {
         return getAdapter(sport).getStatistics(eventId, filter);
+    }
+
+    @Cacheable(value = "live-events", key = "#sport")
+    public java.util.List<SportEvent> listLiveEvents(String sport) {
+        return getAdapter(sport).listLiveEvents();
+    }
+
+    @Cacheable(value = "scheduled-events", key = "#sport")
+    public java.util.List<SportEvent> listScheduledEvents(String sport) {
+        return getAdapter(sport).listScheduledEvents();
     }
 
     private SportAdapter getAdapter(String sport) {

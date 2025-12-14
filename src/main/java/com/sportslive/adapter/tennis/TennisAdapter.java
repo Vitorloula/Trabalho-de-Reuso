@@ -47,6 +47,26 @@ public class TennisAdapter implements SportAdapter {
         return mapToStatistics(eventId, response, filter);
     }
 
+    @Override
+    public List<SportEvent> listLiveEvents() {
+        var response = client.getTennisLiveEvents();
+        return mapToEventList(response);
+    }
+
+    @Override
+    public List<SportEvent> listScheduledEvents() {
+        var response = client.getTennisScheduledEvents();
+        return mapToEventList(response);
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<SportEvent> mapToEventList(Map<String, Object> response) {
+        var summaries = (List<Map<String, Object>>) response.get("summaries");
+        if (summaries == null)
+            return List.of();
+        return summaries.stream().map(this::mapToSportEvent).toList();
+    }
+
     private SportEvent mapToSportEvent(Map<String, Object> response) {
         var sportEvent = getMap(response, "sport_event");
         var status = getMap(response, "sport_event_status");

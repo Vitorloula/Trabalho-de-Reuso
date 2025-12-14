@@ -55,4 +55,18 @@ public class EventController {
         StatisticsFilter filter = new StatisticsFilter(advanced, period);
         return ResponseEntity.ok(eventService.getStatistics(sport, eventId, filter));
     }
+
+    @GetMapping("/live")
+    @Operation(summary = "Listar eventos ao vivo", description = "Retorna todos os eventos em andamento do esporte")
+    public ResponseEntity<java.util.List<SportEvent>> listLiveEvents(
+            @Parameter(description = "Esporte: soccer, basketball, tennis") @PathVariable String sport) {
+        return ResponseEntity.ok(eventService.listLiveEvents(sport));
+    }
+
+    @GetMapping("/scheduled")
+    @Operation(summary = "Listar eventos agendados", description = "Retorna eventos agendados para hoje")
+    public ResponseEntity<java.util.List<SportEvent>> listScheduledEvents(
+            @Parameter(description = "Esporte: soccer, basketball, tennis") @PathVariable String sport) {
+        return ResponseEntity.ok(eventService.listScheduledEvents(sport));
+    }
 }
