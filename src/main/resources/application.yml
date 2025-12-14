@@ -10,7 +10,7 @@ spring:
       spec: maximumSize=1000,expireAfterWrite=300s
 
 sportradar:
-  api-key: bWAPNF7wLeaPV2CMHhmAerV2rV1jMPiOHn4pfiiD
+  api-key: ${SPORTRADAR_API_KEY}
   base-urls:
     soccer: https://api.sportradar.com/soccer/trial/v4/en
     basketball: https://api.sportradar.com/basketball/trial/v4/en
