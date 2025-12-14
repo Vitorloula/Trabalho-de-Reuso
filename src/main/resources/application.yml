@@ -63,3 +63,10 @@ logging:
     io.github.resilience4j: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] [%X{traceId}] %-5level %logger{36} - %msg%n"
+
+springdoc:
+  swagger-ui:
+    url: /v3/api-docs
+  servers:
+    - url: https://gleaming-worm-vitor-project-201f7f66.koyeb.app
+      description: Koyeb Production
