@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: sports-live-service
+    env: java
+    buildCommand: mvn clean install -DskipTests
+    startCommand: java -jar target/sports-live-service-1.0.0-SNAPSHOT.jar
+    envVars:
+      - key: SPORTRADAR_API_KEY
+        sync: false
+      - key: JAVA_OPTS
+        value: -Xmx256m
