@@ -19,7 +19,7 @@
     <description>Microserviço para dados esportivos em tempo real</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <resilience4j.version>2.1.0</resilience4j.version>
     </properties>
 
