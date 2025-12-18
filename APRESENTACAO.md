@@ -69,25 +69,7 @@ Documentação interativa disponível em: `/swagger-ui.html`
 
 ## Arquitetura em Camadas
 
-```
-┌───────────────────────────────────────────────────────┐
-│                   SportsLiveService                   │
-├───────────────────────────────────────────────────────┤
-│  API Layer (Controllers)                              │
-│    └── /v1/{sport}/events/{eventId}/*                 │
-├───────────────────────────────────────────────────────┤
-│  Service Layer (EventService)                         │
-│    └── Roteamento + Cache                             │
-├───────────────────────────────────────────────────────┤
-│  Adapter Layer                                        │
-│    ├── SoccerAdapter                                  │
-│    ├── BasketballAdapter                              │
-│    └── TennisAdapter                                  │
-├───────────────────────────────────────────────────────┤
-│  Infrastructure (SportradarClient)                    │
-│    └── Resilience4j (Circuit Breaker + Retry)         │
-└───────────────────────────────────────────────────────┘
-```
+![Arquitetura da Aplicação](diagrama-da-arquitetura.png)
 
 **Descrição das Camadas:**
 
@@ -235,21 +217,7 @@ O **SportsLiveService** pode ser consumido por qualquer sistema que precise de d
 
 ## Arquitetura de Reuso
 
-```
-┌───────────────────────────────────────────────────────────────────┐
-│                     Sistemas que Reutilizam                       │
-├────────────────┬────────────────┬────────────────┬────────────────┤
-│  App Mobile    │  Portal Web    │  SmartTV App   │  Bot Telegram  │
-└───────┬────────┴───────┬────────┴───────┬────────┴───────┬────────┘
-        │                │                │                │
-        └────────────────┴───────┬────────┴────────────────┘
-                                 │
-                                 ▼
-                  ┌───────────────────────────────┐
-                  │      SportsLiveService        │
-                  │        (Microserviço)         │
-                  └───────────────────────────────┘
-```
+![Arquitetura de Reuso](diagrama-de-reuso.png)
 
 ---
 
