@@ -102,9 +102,9 @@ Documentação interativa disponível em: `/swagger-ui.html`
 
 ### 1. **Strategy Pattern** (Padrão Estratégia)
 
-**Problema Resolvido:** Cada esporte possui regras, terminologia e estrutura de dados diferentes.
+**O que é:** Padrão que permite definir algoritmos intercambiáveis em classes separadas, escolhendo qual usar em tempo de execução.
 
-**Implementação:**
+**Aplicação:** Interface `SportAdapter` define o contrato comum. Cada esporte (Soccer, Basketball, Tennis) implementa sua própria estratégia de obtenção e conversão de dados.
 
 ```java
 public interface SportAdapter {
@@ -118,18 +118,15 @@ public interface SportAdapter {
 }
 ```
 
-**Benefícios:**
+**Benefício:** Permite adicionar novos esportes sem modificar código existente (Princípio Aberto-Fechado).
 
-- ✅ Permite adicionar novos esportes sem modificar código existente
-- ✅ Cada adapter encapsula a lógica específica do esporte
-- ✅ Facilita testes unitários isolados
-- ✅ Segue o Princípio Aberto-Fechado (OCP)
+---
 
 ### 2. **Adapter Pattern** (Padrão Adaptador)
 
-**Problema Resolvido:** A API externa (Sportradar) retorna dados em formatos diferentes para cada esporte.
+**O que é:** "Tradutor" que converte interfaces incompatíveis para trabalharem juntas.
 
-**Implementação:**
+**Aplicação:** A API externa (Sportradar) retorna dados em formatos diferentes para cada esporte. Cada adapter converte esses dados para nosso modelo unificado (`SportEvent`, `Score`, `Timeline`).
 
 ```java
 @Component
@@ -139,22 +136,20 @@ public class SoccerAdapter implements SportAdapter {
     @Override
     public SportEvent getEvent(String eventId) {
         Map<String, Object> response = client.getSoccerMatch(eventId);
-        return mapToSportEvent(response); // Adapta para modelo unificado
+        return mapToSportEvent(response);
     }
 }
 ```
 
-**Benefícios:**
+**Benefício:** Isola mudanças da API externa - se Sportradar mudar, apenas o adapter precisa ser alterado.
 
-- ✅ Converte dados específicos para modelo de domínio unificado
-- ✅ Isola mudanças da API externa
-- ✅ Clientes da API usam interface consistente
+---
 
 ### 3. **Dependency Injection** (Injeção de Dependência)
 
-**Problema Resolvido:** Necessidade de registrar e gerenciar múltiplos adapters.
+**O que é:** Técnica onde as dependências são fornecidas externamente pelo container Spring, ao invés de serem criadas internamente.
 
-**Implementação:**
+**Aplicação:** O Spring injeta automaticamente um Map com todos os adapters registrados, permitindo descoberta dinâmica de novos esportes.
 
 ```java
 @Service
@@ -166,20 +161,12 @@ public class EventService {
     }
 
     private SportAdapter getAdapter(String sport) {
-        SportAdapter adapter = adapters.get(sport.toLowerCase());
-        if (adapter == null) {
-            throw new UnsupportedSportException(sport);
-        }
-        return adapter;
+        return adapters.get(sport.toLowerCase());
     }
 }
 ```
 
-**Benefícios:**
-
-- ✅ Registro automático de novos adapters
-- ✅ Baixo acoplamento entre componentes
-- ✅ Facilita substituição e testes
+**Benefício:** Basta criar uma nova classe com `@Component` para registrar um novo esporte automaticamente.
 
 ## Padrões de Resiliência
 
