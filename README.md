@@ -57,6 +57,8 @@ Acesse: http://localhost:8080/swagger-ui.html
 - Adapter Layer (SoccerAdapter, BasketballAdapter, TennisAdapter)
 - Infrastructure (SportradarClient) - Resilience4j (Circuit Breaker + Retry)
 
+![Arquitetura da Aplicação](diagrama-da-arquitetura.png)
+
 ## Resiliência
 
 - Circuit Breaker: 50% failure rate threshold
